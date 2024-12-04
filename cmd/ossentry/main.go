@@ -1,4 +1,4 @@
-// ossentry operates on osinsight query and pack files
+// ossentry operates on osquery query and pack files
 //
 // Copyright 2022 Chainguard, Inc.
 
@@ -45,7 +45,7 @@ type Config struct {
 func main() {
 	outputFlag := flag.String("output", "", "Location of output")
 	minIntervalFlag := flag.Duration("max-interval", 20*time.Second, "Queries can't be scheduled more often than this")
-	multiLineFlag := flag.Bool("multi-line", false, "output queries is multi-line form. This is accepted by osinsight, but technically is invalid JSON.")
+	multiLineFlag := flag.Bool("multi-line", false, "output queries is multi-line form. This is accepted by osquery, but technically is invalid JSON.")
 	defaultIntervalFlag := flag.Duration("default-interval", 1*time.Hour, "Interval to use for queries which do not specify one")
 	tagIntervalsFlag := flag.String("tag-intervals", "transient=6m,persistent=1.25x,postmortem=6h,rapid=20s,often=x/3,seldom=3x", "modifiers to the default-interval based on query tags")
 	maxIntervalFlag := flag.Duration("min-interval", 24*time.Hour, "Queries cant be scheduled less often than this")
@@ -96,8 +96,8 @@ func main() {
 	}
 
 	if *verifyFlag || action == "verify" {
-		if _, err := exec.LookPath("osinsighti"); err != nil {
-			klog.Exit(fmt.Errorf("osinsighti executable not found on the host! Download it from: https://osinsight.io/downloads"))
+		if _, err := exec.LookPath("osqueryi"); err != nil {
+			klog.Exit(fmt.Errorf("osqueryi executable not found on the host! Download it from: https://osquery.io/downloads"))
 		}
 
 		err = Verify(paths, c)
@@ -265,7 +265,7 @@ func applyConfig(mm map[string]*query.Metadata, c Config) error {
 	return nil
 }
 
-// Apply applies programattic changes to an osinsight pack.
+// Apply applies programattic changes to an osquery pack.
 func Apply(sourcePaths []string, output string, c Config) error {
 	ps := []*query.Pack{}
 
@@ -295,7 +295,7 @@ func Apply(sourcePaths []string, output string, c Config) error {
 	return os.WriteFile(output, bs, 0o600)
 }
 
-// Pack creates an osinsight pack from a recursive directory of SQL files.
+// Pack creates an osquery pack from a recursive directory of SQL files.
 func Pack(sourcePaths []string, output string, c Config) error {
 	mms := map[string]*query.Metadata{}
 	for _, path := range sourcePaths {
@@ -327,7 +327,7 @@ func Pack(sourcePaths []string, output string, c Config) error {
 	return os.WriteFile(output, bs, 0o600)
 }
 
-// Unpack extracts SQL files from an osinsight pack.
+// Unpack extracts SQL files from an osquery pack.
 func Unpack(sourcePaths []string, destPath string, c Config) error {
 	if destPath == "" {
 		destPath = "."

@@ -18,7 +18,7 @@ type Pack struct {
 	Queries   map[string]*Metadata `json:"queries,omitempty"`
 	Discovery map[string]*Metadata `json:"discovery,omitempty"`
 
-	// Refer to obj.HasMember() calls in osinsight/config/packs.cpp
+	// Refer to obj.HasMember() calls in osquery/config/packs.cpp
 	Shard    int    `json:"shard,omitempty"`
 	Platform string `json:"platform,omitempty"`
 	Version  string `json:"version,omitempty"`
@@ -49,7 +49,7 @@ type RenderConfig struct {
 	SingleQuotes bool
 }
 
-// RenderPack renders an osinsight pack file from a set of queries.
+// RenderPack renders an osquery pack file from a set of queries.
 func RenderPack(pack *Pack, c *RenderConfig) ([]byte, error) {
 	out, err := json.MarshalIndent(pack, "", "  ")
 	if err != nil {
@@ -68,7 +68,7 @@ func RenderPack(pack *Pack, c *RenderConfig) ([]byte, error) {
 
 }
 
-// LoadPack loads and parses an osinsight pack file.
+// LoadPack loads and parses an osquery pack file.
 func LoadPack(path string) (*Pack, error) {
 	pack := &Pack{}
 	var err error

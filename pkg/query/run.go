@@ -63,7 +63,7 @@ func IsIncompatible(m *Metadata) string {
 func Run(m *Metadata) (*RunResult, error) {
 	incompatible := IsIncompatible(m)
 
-	cmd := exec.Command("osinsighti", "--json")
+	cmd := exec.Command("osqueryi", "--json")
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		return nil, fmt.Errorf("error: %v", err)
@@ -73,7 +73,7 @@ func Run(m *Metadata) (*RunResult, error) {
 		defer stdin.Close()
 		_, err := io.WriteString(stdin, m.Query)
 		if err != nil {
-			klog.Errorf("failed tos end data to osinsighti: %w", err)
+			klog.Errorf("failed tos end data to osqueryi: %w", err)
 		}
 	}()
 

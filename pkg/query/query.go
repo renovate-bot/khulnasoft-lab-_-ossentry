@@ -12,7 +12,7 @@ import (
 )
 
 type Metadata struct {
-	// Refer to q.value.HasMember() calls in osinsight/config/packs.cpp
+	// Refer to q.value.HasMember() calls in osquery/config/packs.cpp
 	Query       string `json:"query"`
 	Interval    string `json:"interval,omitempty"`
 	Shard       int    `json:"shard,omitempty"`
@@ -33,7 +33,7 @@ type Metadata struct {
 	SingleLineQuery string `json:"-"`
 }
 
-// LoadFromDir recursively loads osinsight queries from a directory.
+// LoadFromDir recursively loads osquery queries from a directory.
 func LoadFromDir(path string) (map[string]*Metadata, error) {
 	mm := map[string]*Metadata{}
 
@@ -161,7 +161,7 @@ func Parse(name string, bs []byte) (*Metadata, error) { //nolint: funlen // TODO
 			content = strings.TrimSpace(content)
 		}
 
-		// See https://github.com/osinsight/osinsight/blob/4ee0be8000d59742d4fe86d2cb0a6241b79d11ff/osinsight/config/packs.cpp
+		// See https://github.com/osquery/osquery/blob/4ee0be8000d59742d4fe86d2cb0a6241b79d11ff/osquery/config/packs.cpp
 		switch directive {
 		case "interval":
 			m.Interval = content

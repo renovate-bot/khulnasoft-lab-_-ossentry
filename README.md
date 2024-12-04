@@ -5,7 +5,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/khulnasoft-lab/ossentry?include_prereleases)](https://github.com/khulnasoft-lab/ossentry/releases/latest)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A swiss-army tool for testing, creating, and manipulating [osinsight](https://osinsight.io/) query packs.
+A swiss-army tool for testing, creating, and manipulating [osquery](https://osquery.io/) query packs.
 
 ![ossentry logo](images/logo-small.png?raw=true "ossentry logo")
 
@@ -21,18 +21,18 @@ go install github.com/khulnasoft-lab/ossentry/cmd/ossentry@latest
 
 ossentry supports 4 commands:
 
-* `apply` - programatically manipulate an osinsight query pack, for instance, adjusting intervals
+* `apply` - programatically manipulate an osquery query pack, for instance, adjusting intervals
 * `pack` - create a JSON pack file from a directory of raw SQL files
 * `unpack` - extract raw SQL files from a JSON query pack file
-* `run` - run an osinsight pack file or directory of SQL queries with human and diff-friendly output
+* `run` - run an osquery pack file or directory of SQL queries with human and diff-friendly output
 * `verify` - verify that the queries in a query pack, directory, or raw SQL file are valid and test well
 
 ### apply
 
-Want to take an osinsight pack from the internet, but make changes to it programatically? ossentry has you covered:
+Want to take an osquery pack from the internet, but make changes to it programatically? ossentry has you covered:
 
 ```shell
-curl https://raw.githubusercontent.com/osinsight/osinsight/master/packs/it-compliance.conf \
+curl https://raw.githubusercontent.com/osquery/osquery/master/packs/it-compliance.conf \
   | ossentry --min-interval=8h --platforms linux,posix --exclude os_version apply -
 ```
 
@@ -40,7 +40,7 @@ This will set all queries to an 8-hour interval, remove Windows-specific queries
 
 ### Pack
 
-Create an osinsight pack configuration from a recursive directory of SQL files:
+Create an osquery pack configuration from a recursive directory of SQL files:
 
 ```shell
 ossentry pack /tmp/osx-attacks
@@ -100,7 +100,7 @@ disk_encryption (0 rows)
 
 ### Unpack
 
-Extract an osinsight pack into a directory of SQL files:
+Extract an osquery pack into a directory of SQL files:
 
 ```shell
 ossentry --output=/tmp/osx-attacks unpack osx-attacks.conf
@@ -133,10 +133,10 @@ Example output:
 Verifying "high-disk-bytes-written" ...
 high-disk-bytes-written" returned 0 rows within 264.361831ms
 Verifying "unexpected-shell-parents" ...
-"unexpected-shell-parents" failed validation: /sbin/osinsighti --json [exit status 1]: Error: near line 1: near "sh": syntax error
+"unexpected-shell-parents" failed validation: /sbin/osqueryi --json [exit status 1]: Error: near line 1: near "sh": syntax error
 78 queries found: 55 verified, 10 errored, 13 skipped
 "verify" failed: 10 errors occurred:
- * xprotect-reports: /sbin/osinsighti --json [exit status 1]: Error: near line 1: no such table: xprotect_reports
+ * xprotect-reports: /sbin/osqueryi --json [exit status 1]: Error: near line 1: no such table: xprotect_reports
 ```
 
 You can set limits on the number of rows returned, amount of runtime per query, per day, or across the pack, see `--help` for more information.
@@ -165,7 +165,7 @@ Here are the options that are available to `apply`, `unpack`, `pack`, and `verif
   -min-interval duration
     	Queries cant be scheduled less often than this (default 24h0m0s)
   -multi-line
-    	output queries is multi-line form. This is accepted by osinsight, but technically is invalid JSON.
+    	output queries is multi-line form. This is accepted by osquery, but technically is invalid JSON.
   -output string
     	Location of output
   -platforms string
