@@ -34,24 +34,23 @@ type Metadata struct {
 }
 
 // LoadFromDir recursively loads osquery queries from a directory.
-func LoadFromDir(path string) (map[string]*Metadata, error) {
+func LoadFromDir(dirPath string) (map[string]*Metadata, error) {
 	mm := map[string]*Metadata{}
 
-	err := filepath.Walk(path,
-		func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(dirPath, func(filePath string, _ os.FileInfo, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if strings.HasSuffix(filePath, ".sql") {
+			klog.V(1).Infof("found query: %s", filePath)
+			m, err := Load(filePath)
 			if err != nil {
-				return err
+				return fmt.Errorf("load: %w", err) // Use %w for error wrapping
 			}
-			if strings.HasSuffix(path, ".sql") {
-				klog.V(1).Infof("found query: %s", path)
-				m, err := Load(path)
-				if err != nil {
-					return fmt.Errorf("load: %v", err)
-				}
-				mm[m.Name] = m
-			}
-			return nil
-		})
+			mm[m.Name] = m
+		}
+		return nil
+	})
 
 	return mm, err
 }
