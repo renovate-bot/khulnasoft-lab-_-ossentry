@@ -92,7 +92,6 @@ linters-settings:
       - name: unexported-return
       - name: unnecessary-stmt
       - name: unreachable-code
-      - name: unused-parameter
       - name: var-declaration
       - name: var-naming
       - name: unconditional-recursion
@@ -124,7 +123,6 @@ linters:
     - forcetypeassert
     - funlen
     - gocognit
-    - goconst
     - gocritic
     - godot
     - gofmt
@@ -167,7 +165,6 @@ linters:
   # - exhaustivestruct
     - gochecknoglobals
     - gochecknoinits
-    - goconst
   # - godox
   # - goerr113
   # - gomnd

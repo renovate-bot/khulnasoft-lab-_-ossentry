@@ -347,7 +347,6 @@ func Unpack(sourcePaths []string, destPath string, c Config) error {
 		for k, v := range p.Queries {
 			mms[k] = v
 		}
-
 	}
 
 	err := query.SaveToDirectory(mms, destPath)
@@ -428,7 +427,6 @@ func Run(path []string, output string, c Config) error {
 	if output != "" && output != "-" {
 		f, err = os.OpenFile(output, os.O_RDWR|os.O_CREATE, 0o700)
 		if err != nil {
-
 			return fmt.Errorf("unable to open output: %s", err)
 		}
 	}

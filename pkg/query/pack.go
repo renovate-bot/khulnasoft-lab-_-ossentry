@@ -25,7 +25,7 @@ type Pack struct {
 	Oncall   string `json:"oncall,omitempty"`
 }
 
-// FlattenPacks flattens an array of Pack objects
+// FlattenPacks flattens an array of Pack objects.
 func FlattenPacks(ps []*Pack) *Pack {
 	var c *Pack
 
@@ -65,7 +65,6 @@ func RenderPack(pack *Pack, c *RenderConfig) ([]byte, error) {
 	out = bytes.ReplaceAll(out, []byte(`\u003c`), []byte("<"))
 	out = bytes.ReplaceAll(out, []byte(`\u0026`), []byte("&"))
 	return out, nil
-
 }
 
 // LoadPack loads and parses an osquery pack file.
